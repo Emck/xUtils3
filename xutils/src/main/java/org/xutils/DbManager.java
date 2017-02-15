@@ -107,6 +107,15 @@ public interface DbManager extends Closeable {
      */
     void dropTable(Class<?> entityType) throws DbException;
 
+
+    /**
+     * 创建表
+     *
+     * @param entityType
+     * @throws DbException
+     */
+    void createTableIfNotExistExt(Class<?> entityType) throws DbException;
+
     /**
      * 添加一列,
      * 新的entityType中必须定义了这个列的属性.

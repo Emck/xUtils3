@@ -68,7 +68,7 @@ public final class TableEntity<T> {
             return true;
         }
 
-        Cursor cursor = db.execQuery("SELECT COUNT(*) AS c FROM sqlite_master WHERE type='table' AND name='" + name + "'");
+        Cursor cursor = db.execQuery("SELECT COUNT(*) AS c FROM sqlite_master WHERE (type='table' or type='view') AND name='" + name + "'");
         if (cursor != null) {
             try {
                 if (cursor.moveToNext()) {

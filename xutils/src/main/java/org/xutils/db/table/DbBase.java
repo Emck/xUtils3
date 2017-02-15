@@ -49,7 +49,7 @@ public abstract class DbBase implements DbManager {
 
     @Override
     public void dropDb() throws DbException {
-        Cursor cursor = execQuery("SELECT name FROM sqlite_master WHERE type='table' AND name<>'sqlite_sequence'");
+        Cursor cursor = execQuery("SELECT name FROM sqlite_master WHERE (type='table' or type='view') AND name<>'sqlite_sequence'");
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
@@ -107,6 +107,10 @@ public abstract class DbBase implements DbManager {
                 }
             }
         }
+    }
+
+    public void createTableIfNotExistExt(Class<?> entityType) throws DbException {
+        createTableIfNotExist(this.getTable(entityType));
     }
 
     protected void removeTable(Class<?> entityType) {
