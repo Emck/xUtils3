@@ -1,10 +1,11 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 def siteUrl = 'https://github.com/wyouflf/xUtils3'
 def gitUrl = 'https://github.com/wyouflf/xUtils3.git'
 group = "org.xutils"
-version = "3.3.40"
+version = "3.3.44"
 
 android {
     compileSdkVersion 25
@@ -12,8 +13,8 @@ android {
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 20161211
+        targetSdkVersion 23
+        versionCode 20170226
         versionName version
     }
     buildTypes {
@@ -48,4 +49,21 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "xUtils"
+        // #CONFIG# project name in jcenter
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
 }
